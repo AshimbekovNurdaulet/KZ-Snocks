@@ -33,7 +33,7 @@ Vue.component('product', {
                 <p 
                 v-else
                 :class="{ outOfStock: !inStock}"
-                >Out of Stock</p>
+                >Не в наличии</p>
                 <p>{{ sale }}</p>
                 <p>Доставка: {{ shipping }}</p>
 
