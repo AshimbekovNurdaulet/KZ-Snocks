@@ -56,11 +56,7 @@ Vue.component('product', {
                 :class="{ disabledButton: !inStock}"
                 >Добавить в корзину</button>
                 <button v-on:click="removeToCart">Удалить с корзины</button>
-                <div class="cart">
-                    <p>Корзина({{ cart }})</p>
-                </div>
-        
-            </div>
+            </div>  
         </div>`,
         data() {
             return {
@@ -81,11 +77,10 @@ Vue.component('product', {
                         variantId: 2243,
                         variantColor: 'Blue',
                         variantImage: './asset/img/blue.jpg',
-                        variantQuantity: 0
+                        variantQuantity: 2
                     }
                 ],
               //   sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-                cart: 0,
                 selectedVariant: 0
             }
         },
@@ -114,17 +109,17 @@ Vue.component('product', {
                }
               },
               methods: {
-                  addToCard() {
-                      this.cart +=1;
-                      console.log('сложение');
-                  },
                   updateProduct(index){
                       this.selectedVariant = index;
                       console.log('Изменение изображния');
                   },
+                  addToCard() {
+                    this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
+                    console.log('пользовательское событие нажатия кнопки');
+                  },
                   removeToCart(){
-                      this.cart -=1;
-                      console.log('произведение');
+                    this.$emit('remove-to-cart', this.variants[this.selectedVariant].variantId);
+                    console.log('пользовательское событие нажатия кнопки удаления');
                   }
               },
 })
@@ -133,6 +128,20 @@ var app = new Vue({
     el: '#app',
     data: {
       premium: true,
+      cart: []
+    },
+    methods: {
+        updateCart(id){
+            this.cart.push(id);
+            console.log('Обновление значения');
+        },
+        removeItem(id) {
+            for(var i = this.cart.length - 1; i >= 0; i--) {
+              if (this.cart[i] === id) {
+                 this.cart.splice(i, 1);
+              }
+            }
+          }
     }
 })
 

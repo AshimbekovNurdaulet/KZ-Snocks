@@ -10,7 +10,11 @@
 <body>
 
 <div id="app">
-    <product :premium="premium"></product>
+    <div class="cart">
+        <p>Корзина({{ cart.length }})</p>
+    </div>
+
+    <product :premium="premium" @add-to-cart="updateCart" @remove-to-cart="removeItem"></product>
 </div>
 
 
